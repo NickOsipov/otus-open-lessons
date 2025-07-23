@@ -1,8 +1,8 @@
 1. Jupyter
-2. Docker
+2. Docker, Kubernetes
 3. Parquet Viewer
 4. Rainbow CSV
-5. YAML
+5. editorconfig
 6. Data Wrangler
 7. SQLTools
 8. Pylance

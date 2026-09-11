@@ -2,8 +2,8 @@
 name: new-lesson
 description: >-
   Creates a new OTUS open lesson under courses/{Program}/{Program}-{YYYY-MM}/
-  with README.md plus required Markdown artifacts/presentation.md and
-  artifacts/practice.md, and optional uv demo in artifacts/code/.
+  with README.md plus required Markdown presentation.md and practice.md
+  (tracked in git) and optional uv demo in artifacts/code/.
   Programs are an open set: create a new courses/{Program}/ folder when the user
   names a course that is not there yet (for example AgentOps). Use when the user
   asks to create a new open lesson, новый урок, новый курс, анонс вебинара,
@@ -23,13 +23,13 @@ description: >-
 
 Если чего-то нет - спроси. Не выдумывай программу и месяц. Если папка `courses/{Program}/{Program}-{YYYY-MM}/` уже есть - остановись и уточни.
 
-Всегда создавай: `README.md`, `artifacts/presentation.md`, `artifacts/practice.md`. Код - в `artifacts/code/`, если на занятии есть команды или скрипты.
+Всегда создавай: `README.md`, `presentation.md`, `practice.md` (эти три в git). Код - в `artifacts/code/`, если на занятии есть команды или скрипты.
 
 ## Порядок действий
 
 1. Если программа уже есть - прочитай 1-2 README соседних уроков (`courses/{Program}/`) и скопируй тон (эмодзи в заголовках - только если они уже есть у соседей). Если программа новая - используй шаблон без эмодзи, пока пользователь не попросил иначе.
 2. Создай `courses/{Program}/{Program}-{YYYY-MM}/`.
-3. Запиши `README.md`, `artifacts/presentation.md` и `artifacts/practice.md` по [templates.md](templates.md). Язык - русский. Не делай `.pptx` / PDF / HTML. Нигде не ставь длинное или среднее тире, только `-`.
+3. Запиши `README.md`, `presentation.md` и `practice.md` по [templates.md](templates.md). Язык - русский. Не делай `.pptx` / PDF / HTML. Нигде не ставь длинное или среднее тире, только `-`.
 4. Если нужна исполняемая практика - код только в `artifacts/code/`. Пиши `pyproject.toml` с `requires-python = "==3.12.8"`. Не создавай `.venv` (`uv venv` запрещён). Зависимости и запуск: `uv add` / `uv run`. Облако Yandex Cloud. Секреты в `.env`, не в git. Слайд «Практика», `practice.md` и `code/` должны описывать один и тот же план.
 5. Python: все импорты и модульные переменные в начале файла, не внутри функций и классов. Module docstring:
 
@@ -40,7 +40,7 @@ Description: {коротко, но емко}.
 ```
 
    У каждой функции - docstring и type hints.
-6. Не копируй `courses/LLM-DD/LLM-DD-2026-09/README.md` как шаблон. Не копируй старый `AI-ML-PM-2026-10/artifacts/presentation.md` как формат слайдов.
+6. Не копируй `courses/LLM-DD/LLM-DD-2026-09/README.md` как шаблон. Не копируй старый `AI-ML-PM-2026-10/presentation.md` как формат слайдов.
 7. Не коммить, пока пользователь явно не попросил. Сообщение: `feat({Program}): {Program}-{YYYY-MM} open lesson`.
 
 ## README: жёсткие правила

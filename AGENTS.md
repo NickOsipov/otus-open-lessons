@@ -15,7 +15,7 @@
 - Облако всегда **Yandex Cloud**. Не подставляй AWS, GCP или Azure, если пользователь явно не попросил другой провайдер. Типичные сервисы: Object Storage (S3-совместимый API), Cloud Functions, Terraform, VPC, IAM.
 - Python-зависимости и запуск всегда через **uv**. Единственный манифест окружения - **`pyproject.toml`**. Версия Python сейчас строго **`==3.12.8`** (`requires-python = "==3.12.8"`). Не используй pip, poetry или conda, если пользователь явно не попросил.
 - **Никогда не создавай `.venv`**: не запускай `uv venv`, `python -m venv`, `virtualenv`. Не активируй окружение. Команды - `uv add`, `uv run`, при необходимости `uv sync`. Если `uv` сам положит `.venv` на диск, не документируй это как шаг и не коммить.
-- Презентации всегда готовятся **текстом в Markdown**. В каждом уроке обязательно: `artifacts/presentation.md` (слайды) и `artifacts/practice.md` (полный ход практики). Не создавай `.pptx`, Google Slides, PDF или HTML-слайды, если пользователь явно не попросил другой формат.
+- Презентации всегда готовятся **текстом в Markdown**. В каждом уроке в git обязательно: `{lesson}/presentation.md` (слайды) и `{lesson}/practice.md` (полный ход практики). Не создавай `.pptx`, Google Slides, PDF или HTML-слайды, если пользователь явно не попросил другой формат.
 - Никогда не используй длинное тире (em dash, U+2014) и среднее тире (en dash, U+2013). Только ASCII-дефис `-`. Это касается README, слайдов, `practice.md`, комментариев и строк в коде.
 
 ## Структура
@@ -23,10 +23,10 @@
 ```
 courses/{Program}/{Program}-{YYYY-MM}/
   README.md              # публичное описание урока (в git)
-  artifacts/             # локальные артефакты, gitignored
-    presentation.md      # слайды, только Markdown
-    practice.md          # полный ход практики
-    code/                # код и команды к практике
+  presentation.md        # слайды, только Markdown (в git)
+  practice.md            # полный ход практики (в git)
+  artifacts/             # код и прочие локальные артефакты, gitignored
+    code/                # скрипты и команды к практике
 ```
 
 Папки программ в `courses/` - открытый список. Уже есть, например:
@@ -57,7 +57,7 @@ courses/{Program}/{Program}-{YYYY-MM}/
 
 1. Создай папку `courses/{Program}/{Program}-{YYYY-MM}/`.
 2. Добавь `README.md` с описанием для лендинга/анонса.
-3. Всегда добавь `{lesson}/artifacts/presentation.md` и `{lesson}/artifacts/practice.md` - только Markdown.
+3. Всегда добавь `{lesson}/presentation.md` и `{lesson}/practice.md` - только Markdown, оба в git.
 4. Практический код клади в `{lesson}/artifacts/code/`. Зависимости ставь через `uv`. План на слайде «Практика» и шаги в `practice.md` должны совпадать с этим кодом.
 
 Коммит: `feat({Program}): {Program}-{YYYY-MM} open lesson` (или уточнение темы, если папка уже существует).
@@ -102,14 +102,12 @@ courses/{Program}/{Program}-{YYYY-MM}/
 
 Ориентиры по стилю: `courses/MLOps/MLOps-2026-03/README.md`, `courses/DE/DE-2026-02/README.md`, `courses/ML-Basic/ML-Basic-2026-01/README.md`.
 
-## artifacts/
+## Слайды и практика
 
-Локальные артефакты урока. В git не попадают. Папка пишется `artifacts`, не `artefacts`.
+В каждом уроке всегда два Markdown-файла **в корне урока** (они в git, не в `artifacts/`):
 
-В каждом уроке всегда два Markdown-файла:
-
-- `{lesson}/artifacts/presentation.md` - слайды для показа
-- `{lesson}/artifacts/practice.md` - полный ход практики, все действия и команды
+- `{lesson}/presentation.md` - слайды для показа
+- `{lesson}/practice.md` - полный ход практики, все действия и команды
 
 Не генерируй `.pptx` / `.key` / PDF «для показа», пока об этом не попросили отдельно. Не дублируй маркетинговый README один в один.
 
@@ -122,7 +120,7 @@ courses/{Program}/{Program}-{YYYY-MM}/
 3. **Теория** - 4-6 слайдов, заголовки вида `Теория 1`, `Теория 2`, … Не больше шести.
 4. **Практика** - один слайд: план практики. Пункты плана совпадают с шагами в `practice.md` и с тем, что лежит в `artifacts/code/`.
 
-Старый конспект `courses/AI-ML-PM/AI-ML-PM-2026-10/artifacts/presentation.md` не использовать как шаблон этого формата.
+Старый конспект `courses/AI-ML-PM/AI-ML-PM-2026-10/presentation.md` не использовать как шаблон этого формата.
 
 ### practice.md
 
@@ -177,4 +175,4 @@ dependencies = []
 
 ## Язык ответов агента
 
-Отвечай пользователю по-русски. Учебные тексты (`README.md`, `artifacts/presentation.md`, `artifacts/practice.md`, комментарии в демо-коде) тоже на русском, если не попросили иначе.
+Отвечай пользователю по-русски. Учебные тексты (`README.md`, `presentation.md`, `practice.md`, комментарии в демо-коде) тоже на русском, если не попросили иначе.

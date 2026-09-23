@@ -71,7 +71,7 @@
 
 ## Практика
 
-План (совпадает с `practice.md` и `artifacts/code/`):
+План (совпадает с `practice.md` и `{lesson}/code/`):
 
 1. {шаг}
 2. {шаг}
@@ -85,6 +85,8 @@
 Полный ход практики: все действия, команды, ожидаемый результат. Можно провести занятие, читая только этот файл.
 
 Команды практики: `uv add`, `uv run`. Не `uv venv`, не `python -m venv`. Python в `pyproject.toml`: `requires-python = "==3.12.8"`.
+
+В начале `practice.md` явно напиши выбранный бэкенд: Yandex Cloud (что нужно в каталоге/ключах) или Ollama (установка, `ollama pull`, локальный URL). Не описывай оба как равнозначный путь в одном уроке.
 
 ````markdown
 # Практика: {название}
@@ -101,16 +103,16 @@
 
 ## 2. {шаг}
 
-{действие / путь к файлу в artifacts/code/}
+{действие / путь к файлу в code/}
 
 ## 3. {шаг}
 
 {действие}
 ````
 
-## artifacts/code/pyproject.toml
+## code/pyproject.toml
 
-Не создавай `.venv`. Версия Python - строго 3.12.8.
+Файл пиши руками, не через `uv add`: любая команда uv без `UV_PROJECT_ENVIRONMENT` создаст `.venv` в папке урока и будет заблокирована хуком. Версия Python - строго 3.12.8.
 
 ```toml
 [project]
@@ -120,7 +122,7 @@ requires-python = "==3.12.8"
 dependencies = []
 ```
 
-## artifacts/code/*.py
+## code/*.py
 
 ```python
 """Module: {имя}

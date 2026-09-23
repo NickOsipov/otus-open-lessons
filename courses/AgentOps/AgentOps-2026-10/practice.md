@@ -57,7 +57,7 @@ docker compose ps
 Вернитесь в папку демо:
 
 ```bash
-cd courses/AgentOps/AgentOps-2026-10/artifacts/code
+cd courses/AgentOps/AgentOps-2026-10/code
 ```
 
 Создайте локальный файл настроек:

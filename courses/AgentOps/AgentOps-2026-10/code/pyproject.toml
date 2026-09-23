@@ -1,0 +1,13 @@
+[project]
+name = "agentops-langfuse-demo"
+version = "0.1.0"
+description = "Демо наблюдаемости агента поддержки интернет-магазина: self-hosted Langfuse и YandexGPT"
+requires-python = "==3.12.8"
+dependencies = [
+    "langfuse>=4.0.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[tool.uv]
+package = false

@@ -1,0 +1,13 @@
+[project]
+name = "mlops-2025-09"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.39.11",
+    "pandas>=2.3.1",
+    "python-dotenv>=1.1.1",
+    "scikit-learn>=1.7.1",
+    "loguru==0.7.3",
+]

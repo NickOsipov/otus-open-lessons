@@ -32,7 +32,7 @@ description: >-
 1. Если программа уже есть - прочитай 1-2 README соседних уроков (`courses/{Program}/`) и скопируй тон (эмодзи в заголовках - только если они уже есть у соседей). Если программа новая - используй шаблон без эмодзи, пока пользователь не попросил иначе.
 2. Создай `courses/{Program}/{Program}-{YYYY-MM}/`.
 3. Запиши `README.md`, `presentation.md` и `practice.md` по [templates.md](templates.md). Язык - русский. Не делай `.pptx` / PDF / HTML. Нигде не ставь длинное или среднее тире, только `-`.
-4. Если нужна исполняемая практика - код только в `{lesson}/code/`. Пиши `pyproject.toml` с `requires-python = "==3.12.8"` руками, зависимости перечисляй сам. Все обращения к LLM - через **OpenAI SDK** (пакет `openai`), см. раздел ниже. При создании урока ничего не устанавливай: `uv venv`, `uv add`, `uv sync`, `uv run` без `UV_PROJECT_ENVIRONMENT` создают `.venv` в папке урока и блокируются хуком `.cursor/hooks/no-venv.sh`. Нужен реальный прогон - только так: `UV_PROJECT_ENVIRONMENT="$HOME/.cache/otus-uv/{Program}-{YYYY-MM}" uv run ...`. В `practice.md` для студентов остаются обычные `uv add` / `uv run`. Практика - выбранный бэкенд (Yandex Cloud или Ollama). Секреты в `.env`, не в git. Слайд «Практика», `practice.md` и `code/` должны описывать один и тот же план.
+4. Если нужна исполняемая практика - код только в `{lesson}/code/` и только в раскладке из раздела «Структура code/» ниже. Скрипты в корне `code/` не клади. Пиши `pyproject.toml` с `requires-python = "==3.12.8"` руками, зависимости перечисляй сам. Все обращения к LLM - через **OpenAI SDK** (пакет `openai`), см. раздел ниже. При создании урока ничего не устанавливай: `uv venv`, `uv add`, `uv sync`, `uv run` без `UV_PROJECT_ENVIRONMENT` создают `.venv` в папке урока и блокируются хуком `.cursor/hooks/no-venv.sh`. Нужен реальный прогон - только так: `UV_PROJECT_ENVIRONMENT="$HOME/.cache/otus-uv/{Program}-{YYYY-MM}" uv run ...`. В `practice.md` для студентов остаются обычные `uv add` / `uv run`; скрипты запускаются как `PYTHONPATH=. uv run python src/main/...`. Практика - выбранный бэкенд (Yandex Cloud или Ollama). Секреты в `.env`, не в git. Слайд «Практика», `practice.md` и `code/` должны описывать один и тот же план.
 5. Python: все импорты и модульные переменные в начале файла, не внутри функций и классов. Module docstring:
 
 ```python
@@ -44,6 +44,29 @@ Description: {коротко, но емко}.
    У каждой функции - docstring и type hints.
 6. Не копируй `courses/LLM-DD/LLM-DD-2026-09/README.md` как шаблон. Не копируй старый `AI-ML-PM-2026-10/presentation.md` как формат слайдов.
 7. Не коммить, пока пользователь явно не попросил. Сообщение: `feat({Program}): {Program}-{YYYY-MM} open lesson`.
+
+## Структура code/
+
+Код занятия всегда раскладывай так, даже если какая-то папка почти пустая. Плоский набор `*.py` в корне `code/` не используй.
+
+```
+{lesson}/code/
+  pyproject.toml
+  .env.example
+  config/variables.py    # константы, пути, пороги, имена моделей, чтение .env
+  src/lib/               # предметная логика занятия
+  src/main/              # точки входа, по файлу на шаг практики
+  src/utils/             # мелкие помощники без предметной логики
+```
+
+- `config/variables.py` - только настройки. Функции предметной логики сюда не клади.
+- `src/lib/` - то, ради чего урок: разбор документа, клиент модели, работа с индексом.
+- `src/main/` - запускаемые шаги. Имена можно нумеровать: `01_....py`, `02_....py`. Один шаг практики - один файл.
+- `src/utils/` - общие куски без знания задачи: нормализация строки, разбор слов.
+- Импорты: `src/main` берет `src.lib`, `src.utils` и `config.variables`. `src.lib` может брать `src.utils` и `config.variables`. `src.utils` не импортирует `src.lib` и `config`.
+- В папках `config`, `src`, `src/lib`, `src/main`, `src/utils` есть `__init__.py` с module docstring.
+- Запуск из `{lesson}/code/`: `PYTHONPATH=. uv run python src/main/01_example.py`. `PYTHONPATH=.` обязателен: файл лежит не в корне `code/`, а импорты идут от этого корня (`config`, `src`).
+- В `practice.md` команды и пути к файлам совпадают с этой раскладкой.
 
 ## Вызовы LLM: только OpenAI SDK
 

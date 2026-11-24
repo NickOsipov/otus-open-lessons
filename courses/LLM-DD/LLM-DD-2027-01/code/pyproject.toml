@@ -1,0 +1,10 @@
+[project]
+name = "llm-dd-pymupdf-pages"
+version = "0.1.0"
+description = "Демо извлечения текста PDF по страницам через PyMuPDF и ответа через OpenAI API"
+requires-python = "==3.12.8"
+dependencies = [
+    "openai>=1.99.0,<3",
+    "pymupdf>=1.24.0,<2",
+    "python-dotenv>=1.1.0,<2",
+]

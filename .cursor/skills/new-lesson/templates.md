@@ -122,21 +122,69 @@ requires-python = "==3.12.8"
 dependencies = []
 ```
 
-## code/*.py
+## Раскладка code/
+
+Всегда эти папки, даже если в одной из них один файл. Скрипты в корне `code/` не клади.
+
+```
+code/
+  pyproject.toml
+  .env.example
+  config/__init__.py
+  config/variables.py
+  src/__init__.py
+  src/lib/__init__.py
+  src/lib/{предмет}.py
+  src/main/__init__.py
+  src/main/01_{шаг}.py
+  src/utils/__init__.py
+  src/utils/{помощник}.py
+```
+
+Запуск из `code/`:
+
+```bash
+PYTHONPATH=. uv run python src/main/01_{шаг}.py
+```
+
+## config/variables.py
+
+Только константы и чтение `.env`. Пути строй от корня `code/`, не от текущей папки процесса.
+
+```python
+"""Module: variables
+Description: Пути, пороги и настройки модели для занятия.
+"""
+
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+CODE_DIR = Path(__file__).resolve().parents[1]
+DATA_DIR = CODE_DIR / "data"
+```
+
+## src/main и src/lib
 
 ```python
 """Module: {имя}
 Description: {коротко, но емко, зачем файл}.
 """
 
-import os
+from config.variables import DATA_DIR
+from src.lib.example import do_step
 
-CONSTANT = "value"
+
+def main() -> None:
+    """Коротко, что делает шаг практики."""
+    print(do_step(DATA_DIR))
 
 
-def do_step(name: str) -> str:
-    """Коротко, что делает функция."""
-    return name
+if __name__ == "__main__":
+    main()
 ```
 
-Импорты только сверху. Не импортируй внутри функций и классов. У каждой функции - docstring и type hints. В тексте только дефис `-`, без длинного тире.
+Импорты только сверху. Не импортируй внутри функций и классов. У каждой функции - docstring и type hints. В тексте только дефис `-`, без длинного тире. `src/utils` не импортирует `src.lib` и `config`.
